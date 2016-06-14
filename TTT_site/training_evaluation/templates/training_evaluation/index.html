@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'training_evaluation/bootstrap.css'%}"/>
+
+<div class="container">
+    <h1> Train the Trainer Evaluator </h1>
+    <hr>
+    <h2> The BIG question </h2>
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li><a href="/training_evaluation/{{question.id}}/">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+</div>

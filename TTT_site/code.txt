@@ -1,0 +1,70 @@
+- in cmd line
+virtualenv TTT_env
+TTT_env\Scripts\activate
+pip install django
+django-admin startproject TTT_site
+python manage.py startapp training_evaluation
+- run the server to show that its communicating but nothing has been done
+(change to 22pt font)
+
+- in training_evaluation\views.py
+from django.shortcuts import render
+
+from django.http import HttpResponse
+from django.core.urlresolvers import reverse
+
+def index(request):
+    return HttpResponse("Hello Train the Trainer Class")
+	
+- in cmd line
+nul > urls.py
+
+- in training_evaluation\urls.py
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+	url(r'^$', views.index, name='index')
+]
+
+- in TTT_site\urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+	url(r'^training_evaluation/', include('training_evaluation.urls')),
+	url(r'^admin/', admin.site.urls),
+]
+
+-  run the server to /training_evaluation to show the hello message
+
+- in training_evaluation/models.py
+from __future__ import unicode_literals
+
+
+from django.db import models
+
+# Create your models here.
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question)
+    choice_text = models.CharField(max_length=200) 
+    votes = models.IntegerField(default=0)
+	
+- edit the site settings.py file to add the training_evaluation app
+
+- cmd line
+python manage.py migrate
+python manage.py makemigrations training_evaluation
+python maanage.py migrate
+
+
+
+
+
